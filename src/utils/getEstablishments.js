@@ -1,5 +1,5 @@
 module.exports = async (page, cities, keywords) => {
-    let resultsCities = {};
+    let resultsCities = [];
   //Para cada cidade, pesquisar por cada palavra chave
   for await (const city of cities) {
     await page.goto("https://www.google.com/maps/");
@@ -11,7 +11,10 @@ module.exports = async (page, cities, keywords) => {
     await page.evaluate(
       () => (document.getElementById("searchboxinput").value = "")
     );
-    let resultsOfCity = {};
+    let resultsOfCity = {
+        name: city,
+        keywords: []
+    };
     //Pesquisar por cada palavra chave
     for await (const keyword of keywords) {
       //Pesquisar palavra no google maps
@@ -28,9 +31,12 @@ module.exports = async (page, cities, keywords) => {
       for await (const reflink of reflinks) {
         links.push(await page.evaluate((auxLink) => auxLink.href, reflink));
       }
-      resultsOfCity[keyword] = links;
+      resultsOfCity.keywords.push({
+        keyword: keyword,
+        links: links
+      });
     }
-    resultsCities[city] = resultsOfCity;
+    resultsCities.push(resultsOfCity);
   }
   return resultsCities;
 }
