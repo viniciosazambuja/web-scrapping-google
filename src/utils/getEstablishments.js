@@ -21,7 +21,7 @@ module.exports = async (page, cities, keywords) => {
       await page.type("input[id='searchboxinput']", keyword);
       await page.keyboard.press("Enter");
       await page.waitForNavigation();
-      await page.waitFor(5000);
+      await page.waitFor(10000);
       await page.evaluate(
         () => (document.getElementById("searchboxinput").value = "")
       );

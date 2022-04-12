@@ -8,7 +8,7 @@ module.exports = async (page, establishments) => {
         console.log(link);
         await page.goto(link);
         await page.waitForNavigation();
-        await page.waitFor(2000);
+        await page.waitFor(4000);
         console.log("Page URL: ", page.url());
 
         keyword.establishmentsData.push({
