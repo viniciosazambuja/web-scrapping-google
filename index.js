@@ -6,10 +6,10 @@ const jsonToExcel = require("./src/utils/jsonToExcel");
 async function main() {
   console.log("Starting...");
   //Receber um array com nome das cidades
-  const citiesNames = ["Curitiba", "São Paulo", "Rio de Janeiro"];
+  const citiesNames = ["Curitiba-PR", "São Paulo Capital"];
 
   //Receber um array de palavras chaves
-  const keywords = ["Hospital", "Clínica", "Consultório"];
+  const keywords = ["Hospital"];
 
   //Acessar o google maps
   const browser = await puppeteer.launch({
@@ -23,9 +23,6 @@ async function main() {
   let cities = await getInformationOfEstablishments(page, establishments);
   //console.log(cities);
   await jsonToExcel(cities);
-  //Salvar objeto na lista de objetos
-    //Salvar lista de objetos em um arquivo .xlsx
-  //Criar um excel com as informações da lista de objetos
 }
 
 main();

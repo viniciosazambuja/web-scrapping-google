@@ -1,13 +1,14 @@
+const autoScroll = require('./autoScroll');
+
 module.exports = async (page, cities, keywords) => {
     let resultsCities = [];
+    await page.goto("https://www.google.com/maps/");
   //Para cada cidade, pesquisar por cada palavra chave
   for await (const city of cities) {
-    await page.goto("https://www.google.com/maps/");
-    console.log(page.url());
     //Pesquisar cidade no google maps
     await page.type("input[id='searchboxinput']", city);
     await page.keyboard.press("Enter");
-    await page.waitForNavigation();
+    await page.waitFor(5000);
     await page.evaluate(
       () => (document.getElementById("searchboxinput").value = "")
     );
@@ -20,6 +21,7 @@ module.exports = async (page, cities, keywords) => {
       //Pesquisar palavra no google maps
       await page.type("input[id='searchboxinput']", keyword);
       await page.keyboard.press("Enter");
+      await autoScroll(page);
       await page.waitForNavigation();
       await page.waitFor(10000);
       await page.evaluate(

@@ -15,6 +15,7 @@ module.exports = async (cities) => {
           address: establishment.address,
           latitude: establishment.latitude,
           longitude: establishment.longitude,
+          link: establishment.link
         });
       }
     }

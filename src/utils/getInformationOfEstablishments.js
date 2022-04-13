@@ -33,6 +33,7 @@ module.exports = async (page, establishments) => {
           ),
           latitude: page.url().split("@")[1].split(",")[0],
           longitude: page.url().split("@")[1].split(",")[1],
+          link: link
         });
       }
     }
