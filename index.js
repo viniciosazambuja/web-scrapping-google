@@ -6,14 +6,14 @@ const jsonToExcel = require("./src/utils/jsonToExcel");
 async function main() {
   console.log("Starting...");
   //Receber um array com nome das cidades
-  const citiesNames = ["Curitiba-PR", "São Paulo Capital"];
+  const citiesNames = ["Curitiba-PR", "Porto Alegre-RS", "Joinville-SC", "Londrina-PR", "Caxias do Sul-RS", "Florianópolis-SC", "Maringá-PR", "Blumenau-SC", "Ponta Grossa-SC", "Canoas-RS"];
 
   //Receber um array de palavras chaves
   const keywords = ["Hospital"];
 
   //Acessar o google maps
   const browser = await puppeteer.launch({
-    headless: false,
+    headless: true,
     defaultViewport: null,
     args: [],
   });

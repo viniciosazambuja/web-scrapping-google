@@ -1,8 +1,8 @@
-const autoScroll = require('./autoScroll');
+const autoScroll = require("./autoScroll");
 
 module.exports = async (page, cities, keywords) => {
-    let resultsCities = [];
-    await page.goto("https://www.google.com/maps/");
+  let resultsCities = [];
+  await page.goto("https://www.google.com/maps/");
   //Para cada cidade, pesquisar por cada palavra chave
   for await (const city of cities) {
     //Pesquisar cidade no google maps
@@ -13,15 +13,18 @@ module.exports = async (page, cities, keywords) => {
       () => (document.getElementById("searchboxinput").value = "")
     );
     let resultsOfCity = {
-        name: city,
-        keywords: []
+      name: city,
+      keywords: [],
     };
     //Pesquisar por cada palavra chave
     for await (const keyword of keywords) {
       //Pesquisar palavra no google maps
       await page.type("input[id='searchboxinput']", keyword);
       await page.keyboard.press("Enter");
-      await autoScroll(page);
+      await page.waitForNavigation();
+      /*await page.evaluate(
+        () => (document.getElementById("ppdPk-Ej1Yeb-LgbsSe-tJiF1e").click())
+      );*/
       await page.waitForNavigation();
       await page.waitFor(10000);
       await page.evaluate(
@@ -35,10 +38,10 @@ module.exports = async (page, cities, keywords) => {
       }
       resultsOfCity.keywords.push({
         keyword: keyword,
-        links: links
+        links: links,
       });
     }
     resultsCities.push(resultsOfCity);
   }
   return resultsCities;
-}
+};
